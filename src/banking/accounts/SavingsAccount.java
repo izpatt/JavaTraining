@@ -21,7 +21,6 @@ public class SavingsAccount extends Account {
         return accountBalance * 0.05;
     }
 
-
     public void setAccountBalance(double accountBalance) {
         this.accountBalance = accountBalance;
     }
