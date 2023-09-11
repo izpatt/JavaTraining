@@ -6,4 +6,6 @@ public abstract class Account {
     String accountNumber;
     double accountBalance;
 
+    public abstract void setAccountBalance(double accountBalance);
+    public abstract Double getAccountBalance();
 }
