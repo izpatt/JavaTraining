@@ -1,29 +1,32 @@
 package banking.transaction;
 
-
 import banking.accounts.CreditAccount;
+import java.time.LocalDate;
 
 public class Credit extends Transaction {
 
-    private double creditLimit;
     private double penalty;
     private CreditAccount accountType;
 
-
-    public Credit(double creditLimit, double amountTransaction, CreditAccount account, double penalty) {
-        this.creditLimit = creditLimit;
+    public Credit(double amountTransaction, CreditAccount account, double penalty, LocalDate dateOfTransaction) {
         this.amountTransaction = amountTransaction;
         this.toAccountBalance = account.getAccountBalance();
         this.accountType = account;
         this.penalty = penalty;
+        this.dateOfTransaction = dateOfTransaction;
     }
 
     public void processTransaction() {
         if(accountType.getAccountBalance() > amountTransaction) {
-            System.out.println(" >>> Transaction Successful <<< ");
+            System.out.println(" >>> Transaction Successful: Swiped Credit Card <<< \n" +
+                    "Current Credit Account Balance: " + toAccountBalance +
+                    "\nTo Pay: " + amountTransaction
+            );
             computeAccountBalance();
         } else {
             System.out.println(" >>> Transaction Unsuccessful <<< ");
+            listOfTransactions.add("Swiped " + amountTransaction + " from " + accountType.getClass().getSimpleName());
+
         }
     }
 
@@ -31,9 +34,13 @@ public class Credit extends Transaction {
 
         if(accountType.getAccountBalance() > amountTransaction) {
             toAccountBalance -= amountTransaction;
-            if(accountType.getAccountBalance() < creditLimit) {
+
+            if(toAccountBalance < accountType.getCreditLimit()) {
                 toAccountBalance -= penalty;
+                listOfTransactions.add("Penalty " + penalty);
             }
+
+            listOfTransactions.add("Swiped " + amountTransaction + "from " + accountType.getClass().getSimpleName());
         }
         accountType.setAccountBalance(toAccountBalance);
         return toAccountBalance;

@@ -1,6 +1,7 @@
 package banking.transaction;
 import banking.accounts.CheckingAccount;
 import banking.accounts.SavingsAccount;
+import java.time.LocalDate;
 
 public class Transfer extends Transaction {
 
@@ -8,20 +9,24 @@ public class Transfer extends Transaction {
     private SavingsAccount fromAccountObject;
     private CheckingAccount toAccountObject;
 
-    public Transfer(double amountTransaction, SavingsAccount fromAccount, CheckingAccount toAccount) {
+    public Transfer(double amountTransaction, SavingsAccount fromAccount, CheckingAccount toAccount, LocalDate dateTime) {
         this.amountTransaction = amountTransaction;
         this.fromAccountObject = fromAccount;
         this.toAccountObject = toAccount;
+        this.dateOfTransaction = dateOfTransaction;
     }
 
     public void processTransaction() {
         if(fromAccountObject.getAccountBalance() >= amountTransaction) {
             System.out.println(">>> Transaction Successful: Amount is transferred <<< \n" +
-                    "Current Balance: " + fromAccountObject.getAccountBalance() + "\nTo Transfer: " + amountTransaction);
+                    "Current Savings Balance: " + fromAccountObject.getAccountBalance() +
+                    "\nCurrent Check Balance: " + toAccountObject.getAccountBalance() +
+                    "\nTo Transfer: " + amountTransaction);
             computeAccountBalance();
         } else {
             System.out.println("\n>>> Transaction Failed: Insufficient Balance <<< \n" +
                     "Current Balance: " + fromAccountObject.getAccountBalance() + "\nTo Transfer: " + amountTransaction);
+            listOfTransactions.add("Failed Transfer " + amountTransaction + " from Savings to Checking Account");
         }
     }
 
@@ -30,7 +35,7 @@ public class Transfer extends Transaction {
         toAccountBalance = toAccountObject.getAccountBalance() + amountTransaction;
         fromAccountObject.setAccountBalance(fromAccountBalance);
         toAccountObject.setAccountBalance(toAccountBalance);
-
+        listOfTransactions.add("Transferred " + amountTransaction + " from Savings to Checking Account");
         return toAccountBalance;
     }
 
