@@ -25,7 +25,7 @@ public class Credit extends Transaction {
             computeAccountBalance();
         } else {
             System.out.println(" >>> Transaction Unsuccessful <<< ");
-            listOfTransactions.add("Swiped " + amountTransaction + " from " + accountType.getClass().getSimpleName());
+            listOfTransactions.add(dateOfTransaction + " Swiped " + amountTransaction + " from " + accountType.getClass().getSimpleName());
 
         }
     }
@@ -34,13 +34,13 @@ public class Credit extends Transaction {
 
         if(accountType.getAccountBalance() > amountTransaction) {
             toAccountBalance -= amountTransaction;
+            listOfTransactions.add(dateOfTransaction + " Swiped " + amountTransaction + " from " + accountType.getClass().getSimpleName());
 
             if(toAccountBalance < accountType.getCreditLimit()) {
                 toAccountBalance -= penalty;
                 listOfTransactions.add("Penalty " + penalty);
             }
 
-            listOfTransactions.add("Swiped " + amountTransaction + "from " + accountType.getClass().getSimpleName());
         }
         accountType.setAccountBalance(toAccountBalance);
         return toAccountBalance;

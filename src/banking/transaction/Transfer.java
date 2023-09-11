@@ -13,7 +13,7 @@ public class Transfer extends Transaction {
         this.amountTransaction = amountTransaction;
         this.fromAccountObject = fromAccount;
         this.toAccountObject = toAccount;
-        this.dateOfTransaction = dateOfTransaction;
+        this.dateOfTransaction = dateTime;
     }
 
     public void processTransaction() {
@@ -26,7 +26,7 @@ public class Transfer extends Transaction {
         } else {
             System.out.println("\n>>> Transaction Failed: Insufficient Balance <<< \n" +
                     "Current Balance: " + fromAccountObject.getAccountBalance() + "\nTo Transfer: " + amountTransaction);
-            listOfTransactions.add("Failed Transfer " + amountTransaction + " from Savings to Checking Account");
+            listOfTransactions.add(dateOfTransaction + " Failed Transfer " + amountTransaction + " from Savings to Checking Account");
         }
     }
 
@@ -35,7 +35,7 @@ public class Transfer extends Transaction {
         toAccountBalance = toAccountObject.getAccountBalance() + amountTransaction;
         fromAccountObject.setAccountBalance(fromAccountBalance);
         toAccountObject.setAccountBalance(toAccountBalance);
-        listOfTransactions.add("Transferred " + amountTransaction + " from Savings to Checking Account");
+        listOfTransactions.add(dateOfTransaction + " Transferred " + amountTransaction + " from Savings to Checking Account");
         return toAccountBalance;
     }
 

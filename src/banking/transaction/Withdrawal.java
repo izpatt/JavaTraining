@@ -14,7 +14,7 @@ public class Withdrawal extends Transaction {
         this.toAccountBalance = accountType instanceof CheckingAccount ?
                 ((CheckingAccount) accountType).getAccountBalance() : ((SavingsAccount) accountType).getAccountBalance();
         this.accountType = accountType;
-        this.dateOfTransaction = dateOfTransaction;
+        this.dateOfTransaction = dateTime;
     }
 
     public void processTransaction() {
@@ -38,10 +38,10 @@ public class Withdrawal extends Transaction {
         if (accountType instanceof CheckingAccount && toAccountBalance > amountTransaction) {
             toAccountBalance -= amountTransaction;
             ((CheckingAccount) accountType).setAccountBalance(toAccountBalance);
-            listOfTransactions.add("Withdrawed " + amountTransaction + " from " + accountType.getClass().getSimpleName());
+            listOfTransactions.add(dateOfTransaction + " Withdrawed " + amountTransaction + " from " + accountType.getClass().getSimpleName());
         } else if (accountType instanceof SavingsAccount && toAccountBalance > amountTransaction){
             toAccountBalance -= amountTransaction;
-            listOfTransactions.add("Withdrawed " + amountTransaction + " from " + accountType.getClass().getSimpleName());
+            listOfTransactions.add(dateOfTransaction + " Withdrawed " + amountTransaction + " from " + accountType.getClass().getSimpleName());
 
             if(toAccountBalance < ((SavingsAccount) accountType).getMaintainingBalance()){
                 toAccountBalance -= 100;
