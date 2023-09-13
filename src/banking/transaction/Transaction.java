@@ -16,6 +16,6 @@ public abstract class Transaction {
     }
 
     public abstract void processTransaction();
-    public abstract Double computeAccountBalance();
+    protected abstract Double computeAccountBalance();
 
 }

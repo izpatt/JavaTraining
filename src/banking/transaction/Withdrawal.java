@@ -7,48 +7,71 @@ import java.time.LocalDate;
 
 public class Withdrawal extends Transaction {
 
-    private Account accountType;
+    protected Account account;
 
-    public Withdrawal(double amountTransaction, Account accountType, LocalDate dateTime) {
-        this.amountTransaction = amountTransaction;
-        this.toAccountBalance = accountType instanceof CheckingAccount ?
-                ((CheckingAccount) accountType).getAccountBalance() : ((SavingsAccount) accountType).getAccountBalance();
-        this.accountType = accountType;
-        this.dateOfTransaction = dateTime;
+    //Savings Withdrawal
+    public Withdrawal(double amountTransaction, Account account, LocalDate dateTime) {
+        super.amountTransaction = amountTransaction;
+ //       this.toAccountBalance = accountType.getAccountBalance();
+//                accountType instanceof CheckingAccount ?
+//                ((CheckingAccount) accountType).getAccountBalance() : ((SavingsAccount) accountType).getAccountBalance();
+        this.account = account;
+        super.dateOfTransaction = dateTime;
     }
 
+    private boolean validateWithdrawal() {
+        return account.getAccountBalance() > amountTransaction;
+    }
+
+
+    @Override
     public void processTransaction() {
 
-        if(toAccountBalance >= amountTransaction) {
-            System.out.println(">>> Transaction Successful: Amount withdrawed <<< \n" +
-                    "Current " + accountType.getClass().getSimpleName() + " Balance: " + toAccountBalance + "\nTo Withdraw: " + amountTransaction);
-            if(toAccountBalance < ((SavingsAccount) accountType).getMaintainingBalance()) {
-                System.out.println("Account is charged with P100 penalty fee");
-            }
-        }
-        else {
+        //Trap all criteria / possibilities
+        if(account.getAccountBalance() < amountTransaction) {
             System.out.println(">>> Transaction Failed: Insufficient Balance <<< \n" +
-                    "Current Balance: " + toAccountBalance + "\nTo Transfer: " + amountTransaction);
+                    "Current Balance: " + account.getAccountBalance() + "\nTo Transfer: " + amountTransaction);
+            return;
         }
-        computeAccountBalance();
+
+        System.out.println(">>> Transaction Successful: Amount withdrawed <<< \n" +
+                    "Current " + account.getClass().getSimpleName() + " Balance: " + account.getAccountBalance() + "\nTo Withdraw: " + amountTransaction);
+
+            computeAccountBalance();
+
+//        if(account.getAccountBalance() >= amountTransaction) {
+//            System.out.println(">>> Transaction Successful: Amount withdrawed <<< \n" +
+//                    "Current " + account.getClass().getSimpleName() + " Balance: " + account.getAccountBalance() + "\nTo Withdraw: " + amountTransaction);
+//            if(account.getAccountBalance() < ((SavingsAccount) account).getMaintainingBalance()) {
+//                System.out.println("Account is charged with P100 penalty fee");
+//            }
+//            computeAccountBalance();
+//        }
+//        else {
+//            System.out.println(">>> Transaction Failed: Insufficient Balance <<< \n" +
+//                    "Current Balance: " + account.getAccountBalance() + "\nTo Transfer: " + amountTransaction);
+//        }
+
     }
 
-    public Double computeAccountBalance() {
+    @Override
+    protected Double computeAccountBalance() {
 
-        if (accountType instanceof CheckingAccount && toAccountBalance > amountTransaction) {
+        if (account instanceof CheckingAccount && toAccountBalance > amountTransaction) {
             toAccountBalance -= amountTransaction;
-            ((CheckingAccount) accountType).setAccountBalance(toAccountBalance);
-            listOfTransactions.add(dateOfTransaction + " Withdrawed " + amountTransaction + " from " + accountType.getClass().getSimpleName());
-        } else if (accountType instanceof SavingsAccount && toAccountBalance > amountTransaction){
+            ((CheckingAccount) account).setAccountBalance(toAccountBalance);
+            listOfTransactions.add(dateOfTransaction + " Withdrawed " + amountTransaction + " from " + account.getClass().getSimpleName());
+        } else if (account instanceof SavingsAccount && toAccountBalance > amountTransaction){
             toAccountBalance -= amountTransaction;
-            listOfTransactions.add(dateOfTransaction + " Withdrawed " + amountTransaction + " from " + accountType.getClass().getSimpleName());
+            listOfTransactions.add(dateOfTransaction + " Withdrawed " + amountTransaction + " from " + account.getClass().getSimpleName());
 
-            if(toAccountBalance < ((SavingsAccount) accountType).getMaintainingBalance()){
+            if(toAccountBalance < ((SavingsAccount) account).getMaintainingBalance()){
                 toAccountBalance -= 100;
                 listOfTransactions.add("\n Penalty fee: 100" );
             }
-            ((SavingsAccount) accountType).setAccountBalance(toAccountBalance);
+            ((SavingsAccount) account).setAccountBalance(toAccountBalance);
         }
+
         return toAccountBalance;
     }
 

@@ -30,7 +30,7 @@ public class Transfer extends Transaction {
         }
     }
 
-    public Double computeAccountBalance() {
+    protected Double computeAccountBalance() {
         fromAccountBalance = fromAccountObject.getAccountBalance() - amountTransaction;
         toAccountBalance = toAccountObject.getAccountBalance() + amountTransaction;
         fromAccountObject.setAccountBalance(fromAccountBalance);

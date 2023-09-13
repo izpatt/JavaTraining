@@ -11,14 +11,6 @@ public class CheckingAccount extends Account {
         this.payeeName = payeeName;
     }
 
-    public Double getAccountBalance() {
-        return accountBalance;
-    }
-
-    public void setAccountBalance(double accountBalance) {
-        this.accountBalance = accountBalance;
-    }
-
     public String getPayeeName() {
         return payeeName;
     }

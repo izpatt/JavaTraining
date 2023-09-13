@@ -6,6 +6,14 @@ public abstract class Account {
     String accountNumber;
     double accountBalance;
 
-    public abstract void setAccountBalance(double accountBalance);
-    public abstract Double getAccountBalance();
+    public Double getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(double accountBalance) {
+        this.accountBalance = accountBalance;
+    }
+
+//    public abstract void setAccountBalance(double accountBalance);
+//    public abstract Double getAccountBalance();
 }

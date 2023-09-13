@@ -7,22 +7,16 @@ public class SavingsAccount extends Account {
     private double interestEarnings;
 
     public SavingsAccount(String accountName, String accountNumber, double accountBalance, double maintainingBalance, double interest) {
-        this.accountName = accountName;
-        this.accountNumber = accountNumber;
-        this.accountBalance = accountBalance;
+        super.accountName = accountName;
+       // this.accountName = accountName;
+        super.accountNumber = accountNumber;
+        super.accountBalance = accountBalance;
         this.maintainingBalance = maintainingBalance;
         this.interest = interest;
     }
-    public Double getAccountBalance() {
-        return accountBalance;
-    }
 
-    public Double setInterestEarnings() {
+    private Double setInterestEarnings() {
         return accountBalance * 0.05;
-    }
-
-    public void setAccountBalance(double accountBalance) {
-        this.accountBalance = accountBalance;
     }
 
     public double getMaintainingBalance() {

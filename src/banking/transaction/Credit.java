@@ -9,7 +9,7 @@ public class Credit extends Transaction {
     private CreditAccount accountType;
 
     public Credit(double amountTransaction, CreditAccount account, double penalty, LocalDate dateOfTransaction) {
-        this.amountTransaction = amountTransaction;
+        super.amountTransaction = amountTransaction;
         this.toAccountBalance = account.getAccountBalance();
         this.accountType = account;
         this.penalty = penalty;
@@ -30,7 +30,7 @@ public class Credit extends Transaction {
         }
     }
 
-    public Double computeAccountBalance() {
+    protected Double computeAccountBalance() {
 
         if(accountType.getAccountBalance() > amountTransaction) {
             toAccountBalance -= amountTransaction;
