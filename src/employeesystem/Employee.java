@@ -4,15 +4,14 @@ import java.util.HashMap;
 
 public class Employee {
 
-    private HashMap<String, String> employeeList = new HashMap<>();
-    private enum Department { Finance, HR, IT }
-    private String address;
+    private HashMap<String, String> employeeList = new HashMap<String, String>();
+    private String name, address;
 
     public HashMap<String, String> getEmployeeList() {
         return employeeList;
     }
 
-    public void setEmployeeList(HashMap<String, String> employeeList) {
-        this.employeeList = employeeList;
+    public void setEmployeeList(String name, String address) {
+      this.employeeList.put(name,address);
     }
 }

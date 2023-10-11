@@ -46,5 +46,6 @@ public class Main {
         long totalCount1 = numbers.stream().filter(number -> number == 1).count();
         System.out.println("Total Numbers = " + totalCount);
         System.out.println("Total Count of #1 = " + totalCount1);
+        
     }
 }
