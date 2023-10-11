@@ -131,7 +131,6 @@ public class Menu extends Employee {
                     System.out.printf("%-15s %-5s%n", name, address)
             );
         }
-
     }
 
 
